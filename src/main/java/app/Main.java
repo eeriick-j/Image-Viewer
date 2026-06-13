@@ -12,6 +12,7 @@ public class Main {
     public static void main(String[] args) {
         SwingImageDisplay display = new SwingImageDisplay();
         FileImageLoader loader = new FileImageLoader(new File("images"));
+
         ImagePresenter presenter = new ImagePresenter(loader, display);
         MainFrame frame = new MainFrame(presenter, display);
 

@@ -16,13 +16,13 @@ public class MainFrame extends JFrame {
 
         setTitle("Image Viewer");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(800, 600);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setLayout(new BorderLayout());
 
         add(display, BorderLayout.CENTER);
         add(createButtons(), BorderLayout.SOUTH);
 
-        wireEvents();
+        setEventListeners();
     }
 
     private JPanel createButtons() {
@@ -37,11 +37,10 @@ public class MainFrame extends JFrame {
         return panel;
     }
 
-    private void wireEvents() {
+    private void setEventListeners() {
         nextButton.addActionListener(e -> presenter.next());
         prevButton.addActionListener(e -> presenter.prev());
         // Implementar más tarde...
-        addButton.addActionListener(e -> {
-        });
+        addButton.addActionListener(e -> {});
     }
 }
