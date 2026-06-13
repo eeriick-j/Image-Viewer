@@ -1,23 +1,28 @@
 package view;
+import presenter.ImagePresenter;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class MainFrame extends JFrame {
+    private final ImagePresenter presenter;
     private JButton nextButton;
     private JButton prevButton;
     private JButton addButton;
     private SwingImageDisplay imageDisplay;
 
-    public MainFrame(SwingImageDisplay imageDisplay) {
-        this.imageDisplay = imageDisplay;
+    public MainFrame(ImagePresenter presenter, SwingImageDisplay display) {
+        this.presenter = presenter;
 
         setTitle("Image Viewer");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
         setLayout(new BorderLayout());
 
-        add(imageDisplay, BorderLayout.CENTER);
+        add(display, BorderLayout.CENTER);
         add(createButtons(), BorderLayout.SOUTH);
+
+        wireEvents();
     }
 
     private JPanel createButtons() {
@@ -30,5 +35,13 @@ public class MainFrame extends JFrame {
         panel.add(addButton);
         panel.add(nextButton);
         return panel;
+    }
+
+    private void wireEvents() {
+        nextButton.addActionListener(e -> presenter.next());
+        prevButton.addActionListener(e -> presenter.prev());
+        // Implementar más tarde...
+        addButton.addActionListener(e -> {
+        });
     }
 }
