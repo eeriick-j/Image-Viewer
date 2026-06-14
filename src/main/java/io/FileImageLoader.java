@@ -5,7 +5,7 @@ import model.Image;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class FileImageLoader implements ImageLoader {
@@ -16,25 +16,20 @@ public class FileImageLoader implements ImageLoader {
     }
 
     @Override
-    public List<Image> load() {
-        List<Image> images = new ArrayList<>();
-        File[] files = folder.listFiles();
-        if (files == null) return images;
+    public List<File> listImages() {
+        File[] files = folder.listFiles(this::isImage);
+        if (files == null) return List.of();
+        return Arrays.asList(files);
+    }
 
-        for (File file : files) {
-            try {
-                if (isImage(file)) {
-                    images.add(new Image(ImageIO.read(file), file.getName()));
-                }
-            } catch (IOException _) {}
-        }
-        return images;
+    @Override
+    public Image load(File file) throws IOException {
+        return new Image(ImageIO.read(file), file.getName());
     }
 
     private boolean isImage(File file) {
         String name = file.getName().toLowerCase();
-        return name.endsWith(".png") ||
-                name.endsWith(".jpg") ||
-                name.endsWith(".jpeg");
+        return file.isFile() &&
+                (name.endsWith(".png") || name.endsWith(".jpg") || name.endsWith(".jpeg"));
     }
 }

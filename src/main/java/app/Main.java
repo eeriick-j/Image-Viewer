@@ -1,22 +1,20 @@
 package app;
 
 import io.FileImageLoader;
-import presenter.ImagePresenter;
-import view.MainFrame;
-import view.SwingImageDisplay;
+import io.ImageLoader;
+import presenter.ImageViewerPresenter;
+import view.ImageViewerView;
 
-import javax.swing.*;
 import java.io.File;
 
 public class Main {
     public static void main(String[] args) {
-        SwingImageDisplay display = new SwingImageDisplay();
-        FileImageLoader loader = new FileImageLoader(new File("images"));
+        ImageLoader loader = new FileImageLoader(new File("images"));
+        ImageViewerView view = new ImageViewerView();
+        ImageViewerPresenter presenter = new ImageViewerPresenter(loader, view.getDisplay());
 
-        ImagePresenter presenter = new ImagePresenter(loader, display);
-        MainFrame frame = new MainFrame(presenter, display);
-
-        frame.setVisible(true);
+        view.setPresenter(presenter);
+        view.setVisible(true);
         presenter.init();
     }
 }

@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class SwingImageDisplay extends JPanel implements ImageDisplay {
-    private JLabel label;
+    private final JLabel label;
 
     public SwingImageDisplay() {
         setLayout(new BorderLayout());

@@ -1,8 +1,12 @@
 package io;
 
 import model.Image;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 public interface ImageLoader {
-    List<Image> load();
+    Image load(File file) throws IOException;
+    List<File> listImages();
 }
