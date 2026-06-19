@@ -5,7 +5,7 @@ import model.Image;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FileImageLoader implements ImageLoader {
@@ -19,7 +19,7 @@ public class FileImageLoader implements ImageLoader {
     public List<File> listImages() {
         File[] files = folder.listFiles(this::isImage);
         if (files == null) return List.of();
-        return Arrays.asList(files);
+        return new ArrayList<>(List.of(files));
     }
 
     @Override

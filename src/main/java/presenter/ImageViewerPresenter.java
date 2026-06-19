@@ -6,6 +6,7 @@ import view.ImageDisplay;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.List;
 
 public class ImageViewerPresenter {
@@ -39,6 +40,29 @@ public class ImageViewerPresenter {
         if (files == null || files.isEmpty()) return;
         currentIndex = (currentIndex - 1 + files.size()) % files.size();
         showCurrent();
+    }
+
+    public void add(File file) {
+        if (file == null || !file.exists()) return;
+        if (!isValidImage(file)) return;
+        try {
+            File target = new File("images", file.getName());
+            Files.copy(file.toPath(), target.toPath());
+
+            files.add(target);
+            currentIndex = files.size() - 1;
+            showCurrent();
+        } catch (IOException _) {}
+    }
+
+    private boolean isValidImage(File file) {
+        if (file == null || !file.exists()) return false;
+        try {
+            String mime = Files.probeContentType(file.toPath());
+            return mime != null && mime.startsWith("image/");
+        } catch (IOException e) {
+            return false;
+        }
     }
 
     private void showCurrent() {
