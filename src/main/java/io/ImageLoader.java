@@ -9,4 +9,5 @@ import java.util.List;
 public interface ImageLoader {
     Image load(File file) throws IOException;
     List<File> listImages();
+    File save(File file) throws IOException;
 }

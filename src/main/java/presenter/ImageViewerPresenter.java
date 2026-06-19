@@ -43,20 +43,15 @@ public class ImageViewerPresenter {
     }
 
     public void add(File file) {
-        if (file == null || !file.exists()) return;
-        if (!isValidImage(file)) return;
-
+        if (file == null || !file.exists() || !isValidImage(file)) return;
         try {
-            File imagesDir = new File("images");
-            if (!imagesDir.exists()) imagesDir.mkdirs();
-            File target = new File(imagesDir, file.getName());
-            Files.copy(file.toPath(), target.toPath());
-
-            files.add(target);
+            File saved = loader.save(file);
+            files.add(saved);
             currentIndex = files.size() - 1;
             showCurrent();
+        } catch (IOException e) {
+            view.clear();
         }
-        catch (IOException _) {}
     }
 
     private boolean isValidImage(File file) {
