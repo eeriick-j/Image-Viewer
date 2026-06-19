@@ -45,14 +45,18 @@ public class ImageViewerPresenter {
     public void add(File file) {
         if (file == null || !file.exists()) return;
         if (!isValidImage(file)) return;
+
         try {
-            File target = new File("images", file.getName());
+            File imagesDir = new File("images");
+            if (!imagesDir.exists()) imagesDir.mkdirs();
+            File target = new File(imagesDir, file.getName());
             Files.copy(file.toPath(), target.toPath());
 
             files.add(target);
             currentIndex = files.size() - 1;
             showCurrent();
-        } catch (IOException _) {}
+        }
+        catch (IOException _) {}
     }
 
     private boolean isValidImage(File file) {

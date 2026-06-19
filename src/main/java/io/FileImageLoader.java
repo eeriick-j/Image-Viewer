@@ -18,7 +18,7 @@ public class FileImageLoader implements ImageLoader {
     @Override
     public List<File> listImages() {
         File[] files = folder.listFiles(this::isImage);
-        if (files == null) return List.of();
+        if (files == null) return new ArrayList<>();
         return new ArrayList<>(List.of(files));
     }
 
