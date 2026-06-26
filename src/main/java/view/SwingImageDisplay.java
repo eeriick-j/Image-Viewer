@@ -4,15 +4,14 @@ import model.Image;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class SwingImageDisplay extends JPanel implements ImageDisplay {
-    private final JLabel label;
+    private BufferedImage currentImage;
 
     public SwingImageDisplay() {
         setLayout(new BorderLayout());
-        label = new JLabel();
-        label.setHorizontalAlignment(JLabel.CENTER);
-        add(label, BorderLayout.CENTER);
+        setBackground(Color.BLACK);
     }
 
     @Override
@@ -21,11 +20,35 @@ public class SwingImageDisplay extends JPanel implements ImageDisplay {
             clear();
             return;
         }
-        label.setIcon(new ImageIcon(image.data()));
+        currentImage = image.data();
+        repaint();
     }
 
     @Override
     public void clear() {
-        label.setIcon(null);
+        currentImage = null;
+        repaint();
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (currentImage == null) return;
+
+        int panelW = getWidth();
+        int panelH = getHeight();
+        int imgW    = currentImage.getWidth();
+        int imgH    = currentImage.getHeight();
+
+        double scale = Math.min((double) panelW / imgW, (double) panelH / imgH);
+        int drawW = (int) (imgW * scale);
+        int drawH = (int) (imgH * scale);
+        int x = (panelW - drawW) / 2;
+        int y = (panelH - drawH) / 2;
+
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+        g2.drawImage(currentImage, x, y, drawW, drawH, null);
     }
 }
