@@ -64,7 +64,11 @@ Implementación de `ImageLoader` sobre el sistema de ficheros local. Recibe por 
 ---
 
 ### `presenter/CircularIterator.java`
-Lista que permite la gestión de imágenes con navegación circular
+Estructura de datos que implementa un iterador circular sobre una lista genérica.
+
+Se utiliza para gestionar la navegación de imágenes, evitando tener que manejar manualmente condiciones de borde (inicio y final de la lista).
+
+Permite avanzar y retroceder sin límites lógicos: cuando se alcanza el final de la lista, la navegación continúa desde el principio, y viceversa.
 
 ---
 
