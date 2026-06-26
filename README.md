@@ -16,6 +16,7 @@ src/
 ├── model/
 │     └── Image.java
 └── presenter/
+│     └── CircularIterator.java
 │     └── ImageViewerPresenter.java
 └── view/
       ├── ImageDisplay.java
@@ -25,9 +26,9 @@ src/
 
 ---
 
-## 🏛️ Arquitectura MVP
+## 🏛️ Arquitectura MVP + Iterator Pattern
 
-Este proyecto sigue el patrón **Model-View-Presenter**, que divide la aplicación en tres capas con responsabilidades bien definidas.
+Este proyecto sigue el patrón **Model-View-Presenter**, con el uso de Iterator Pattern para la gestión de lógica de navegación circular de imágenes.
 
 En una arquitectura tradicional sin separación de capas, la UI mezcla lógica de negocio con componentes visuales, lo que hace el código difícil de testear y mantener.
 
@@ -62,8 +63,13 @@ Implementación de `ImageLoader` sobre el sistema de ficheros local. Recibe por 
 
 ---
 
+### `presenter/CircularIterator.java`
+Lista que permite la gestión de imágenes con navegación circular
+
+---
+
 ### `presenter/ImageViewerPresenter.java`
-Núcleo de la aplicación. Mantiene la lista de ficheros disponibles y el índice de la imagen actual. Expone cuatro métodos públicos:
+Núcleo de la aplicación. Conecta el acceso a imágenes, la gestión de navegación y el display, utilizando el iterador para lo último. Expone cuatro métodos públicos:
 
 - `init()` — Carga la lista de imágenes y muestra la primera. Si la lista está vacía, limpia la vista.
 - `next()` — Avanza al siguiente índice con navegación circular.
